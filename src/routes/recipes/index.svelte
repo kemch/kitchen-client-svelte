@@ -3,11 +3,14 @@
 </svelte:head>
 
 <script>
+	import API_URL from '../../api.js';
 
 	import { onMount } from 'svelte';
+	console.log(API_URL)
 
 	let recipes = [];
 	let error = null
+
 
 	onMount(async () => {
 		const parseJSON = (resp) => (resp.json ? resp.json() : resp);
@@ -24,8 +27,7 @@
 	  };
 
 		try {
-			const res = await fetch('http://3.135.235.251:1337/recipes', {
-			// const res = await fetch('http://192.168.1.5:1337/recipes', {
+			const res = await fetch(`${API_URL}/recipes`, {
 			  method: "GET",
 			  headers: {
 			     'Content-Type': 'application/json'
@@ -43,7 +45,7 @@
 	<h1>Recipes</h1>
 	<ul>
 		{#each recipes as recipe}
-			<li><a href="/recipe/{recipe.id}">{recipe.Name}</a></li>
+			<li><a href="/recipes/{recipe.id}">{recipe.Name}</a></li>
 		{/each}
 	</ul>
 	

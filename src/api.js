@@ -1,15 +1,3 @@
-import { onDestroy } from 'svelte';
-import { stores } from '@sapper/app';
-
-
-let token = '';
-const { session } = stores();
-const unsubscribe = session.subscribe(value => {
-	token = value.API_URL;
-});
-
-const api = token
-onDestroy(unsubscribe);
-
-// console.log(token)
-
+const dev = process.env.NODE_ENV === 'development';
+const API_URL = dev? 'http://localhost:1337':'http://3.135.235.251:1337';
+export default API_URL;

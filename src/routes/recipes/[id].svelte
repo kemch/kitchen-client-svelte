@@ -1,5 +1,6 @@
 <script context="module">
 	import API_URL from '../../api.js';
+	import Ingredient from '../../components/Ingredient.svelte';
 	// the (optional) preload function takes a
 	// `{ path, params, query }` object and turns it into
 	// the data we need to render the page
@@ -20,7 +21,7 @@
 </script>
 
 <script>
-	export let id;
+	// export let id;
 	export let recipe;
 </script>
 
@@ -30,6 +31,22 @@
 
 <h1>{recipe.Name}</h1>
 
+
+{#each recipe.IngredientList as ingredient}
+<Ingredient
+	quantity={ingredient.Quantity}
+	unit={ingredient.Unit}
+	ingredient={ingredient.ingredient.Name}
+	preparation={ingredient.Preparation}
+	>
+</Ingredient>
+{/each}
+
+
+<br>
+<br>
+
 <div class='content' style="white-space:pre-wrap;">
-{@html recipe.Recipe}
+{@html recipe.Instructions}
+
 </div>

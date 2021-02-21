@@ -43,10 +43,6 @@
 {/each}
 
 
-<br>
-<br>
-
 <div class='content' style="white-space:pre-wrap;">
-{@html recipe.Instructions}
-
+{@html recipe.Recipe}
 </div>

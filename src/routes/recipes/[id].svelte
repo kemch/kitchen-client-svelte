@@ -15,7 +15,7 @@
 		// server and client
 		const res = await this.fetch(`${API_URL}/recipes/${id}`);
 		const recipe = await res.json();
-
+		console.log(recipe.IngredientList.length)
 		return { recipe };
 	}
 </script>
@@ -31,7 +31,10 @@
 
 <h1>{recipe.Name}</h1>
 
-
+{#if recipe.IngredientList.length}
+	{#if recipe.IngredientSection1Heading}
+		<h2>{recipe.IngredientSection1Heading}</h2>
+	{/if}
 {#each recipe.IngredientList as ingredient}
 <Ingredient
 	quantity={ingredient.Quantity}
@@ -41,6 +44,37 @@
 	>
 </Ingredient>
 {/each}
+{/if}
+
+{#if recipe.IngredientsList2.length}
+	{#if recipe.IngredientSection2Heading}
+		<h2>{recipe.IngredientSection2Heading}</h2>
+	{/if}
+{#each recipe.IngredientsList2 as ingredient}
+<Ingredient
+	quantity={ingredient.Quantity}
+	unit={ingredient.Unit}
+	ingredient={ingredient.ingredient.Name}
+	preparation={ingredient.Preparation}
+	>
+</Ingredient>
+{/each}
+{/if}
+
+{#if recipe.IngredientsList3.length}
+	{#if recipe.IngredientSection3Heading}
+		<h2>{recipe.IngredientSection3Heading}</h2>
+	{/if}
+{#each recipe.IngredientsList3 as ingredient}
+<Ingredient
+	quantity={ingredient.Quantity}
+	unit={ingredient.Unit}
+	ingredient={ingredient.ingredient.Name}
+	preparation={ingredient.Preparation}
+	>
+</Ingredient>
+{/each}
+{/if}
 
 
 <div class='content' style="white-space:pre-wrap;">

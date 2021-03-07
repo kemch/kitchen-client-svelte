@@ -29,12 +29,17 @@
 	<title>{recipe.Name}</title>
 </svelte:head>
 
-<h1>{recipe.Name}</h1>
+<h1><a class="upward-nav" href="/"><img src="/chevron-left.svg" alt="Back"></a>{recipe.Name}</h1>
 
+
+<div class="recipe__section">
 {#if recipe.IngredientList.length}
 	{#if recipe.IngredientSection1Heading}
 		<h2>{recipe.IngredientSection1Heading}</h2>
+	{:else}
+		<h2>Ingredients</h2>
 	{/if}
+
 {#each recipe.IngredientList as ingredient}
 <Ingredient
 	quantity={ingredient.Quantity}
@@ -76,7 +81,25 @@
 {/each}
 {/if}
 
-
+</div>
+<div class="recipe__section">
+<h2>Instructions</h2>
 <div class='content' style="white-space:pre-wrap;">
 {@html recipe.Recipe}
 </div>
+</div>
+
+<style>
+	h1 {
+		display: flex;
+		align-items: center;
+		width: 100%;
+		flex: 0 0 100%;
+	}
+	.upward-nav {
+		margin-right: 4px;
+	}
+	.recipe__section {
+		margin: 24px auto;
+	}
+</style>

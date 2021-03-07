@@ -1,43 +1,58 @@
-<script>
-	import successkid from 'images/successkid.jpg';
-	// import api from '../api.js';
-
-	// console.log(api)
-	// fetch('http://192.168.1.5:1337/recipies', {
-	//   method: 'GET',
-	//   headers: {
-	//     'Content-Type': 'application/json',
-	//   },
-	// })
-	//   .then(response => response.json())
-	//   .then(data => console.log(data));
-
-
-</script>
-
-<style>
-	h1 {
-		text-align: center;
-		margin: 0 auto;
-	}
-
-	h1 {
-		font-size: 2.8em;
-		text-transform: uppercase;
-		font-weight: 700;
-		margin: 0 0 0.5em 0;
-	}
-
-
-	@media (min-width: 480px) {
-		h1 {
-			font-size: 4em;
-		}
-	}
-</style>
-
 <svelte:head>
-	<title>Kitchen Cookbook</title>
+	<title>recipes</title>
 </svelte:head>
 
-<h1>Kitchen Cookbook</h1>
+<script>
+	import API_URL from '../api.js';
+
+	import { onMount } from 'svelte';
+	import RecipeListItem from '../components/RecipeListItem.svelte';
+
+	let recipes = [];
+	let error = null
+
+
+	onMount(async () => {
+		const parseJSON = (resp) => (resp.json ? resp.json() : resp);
+		const checkStatus = (resp) => {
+	    if (resp.status >= 200 && resp.status < 300) {
+	      return resp;
+	    }
+	    return parseJSON(resp).then((resp) => {
+	      throw resp;
+	    });
+	  };
+	  const headers = {
+	    'Content-Type': 'application/json',
+	  };
+
+		try {
+			const res = await fetch(`${API_URL}/recipes`, {
+			  method: "GET",
+			  headers: {
+			     'Content-Type': 'application/json'
+			  },
+			}).then(checkStatus)
+	      .then(parseJSON);
+			recipes = res
+		} catch (e) {
+			error = e
+		}
+	});
+</script>
+<div class="content">
+	<h1>Recipes</h1>
+	<ul>
+		{#each recipes as recipe}
+			<RecipeListItem recipe={recipe}/>
+		{/each}
+	</ul>
+	
+</div>
+
+<style>
+	ul {
+		padding-left: 0;
+		list-style: none;
+	}
+</style>

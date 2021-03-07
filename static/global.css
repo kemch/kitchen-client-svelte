@@ -1,32 +1,50 @@
+:root {
+	--font-size-xl: 24px;
+	--font-size-lg: 18px;
+	--font-size-md: 16px;
+	--font-size-sm: 12px;
+	--font-size-xs: 11px;
+
+	--color-text-0: #383636;
+	--color-text-1: #634C4C;
+	--color-green-2: #27AE60;
+}
+
 body {
 	margin: 0;
-	font-family: Roboto, -apple-system, BlinkMacSystemFont, Segoe UI, Oxygen, Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
-	font-size: 14px;
+	font-family: 'Quicksand', sans-serif;
+	font-size: var(--font-size-md);
+	font-weight: 500;
 	line-height: 1.5;
-	color: #333;
+	color: var(--color-text-0);
+	-webkit-font-smoothing: antialiased;
+  	-moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
 	margin: 0 0 0.5em 0;
-	font-weight: 400;
-	line-height: 1.2;
+	font-weight: bold;
+	font-weight: 100%;
 }
 
 h1 {
-	font-size: 2em;
+	font-size: var(--font-size-xl);
+}
+h2 {
+	font-size: var(--font-size-lg);
 }
 
 a {
 	color: inherit;
 }
 
-code {
-	font-family: menlo, inconsolata, monospace;
-	font-size: calc(1em - 2px);
-	color: #555;
-	background-color: #f0f0f0;
-	padding: 0.2em 0.4em;
-	border-radius: 2px;
+table {
+	border-collapse: collapse;
+}
+
+td,th {
+	padding: 0;
+	margin: 0;
 }
 
 @media (min-width: 400px) {

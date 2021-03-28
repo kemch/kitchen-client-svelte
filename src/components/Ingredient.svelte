@@ -3,11 +3,32 @@
 	export let unit;
 	export let ingredient;
 	export let preparation;
+
+	const fractions = {
+		'0.5': '½',
+		'0.33': '⅓',
+		'0.66': '⅔',
+		'0.25': '¼',
+		'0.125': '⅛',
+		'0.375': '⅜',
+		'0.625': '⅝',
+		'0.875': '⅞',
+	}
+
+	function formatFraction(decimal) {
+		if (fractions[decimal]) {
+			return fractions[decimal];
+		} else {
+			return decimal;
+		}
+	}
+
+	let quantityFormatted = formatFraction(quantity);
 </script>
 
 <div class="ingredient">
 	<div class="ingredient__bullet"></div>
-	<div class="ingredient__quantity">{quantity}&nbsp;</div>
+	<div class="ingredient__quantity" data-quantity={quantity}>{quantityFormatted}&nbsp;</div>
 	<div class="ingredient__unit">{unit}&nbsp;</div>
 	<div class="ingredient__name">{ingredient}</div>
 	{#if preparation}

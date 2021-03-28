@@ -1,6 +1,7 @@
 <script context="module">
 	import API_URL from '../../api.js';
 	import Ingredient from '../../components/Ingredient.svelte';
+	import Tag from '../../components/Tag.svelte';
 	// the (optional) preload function takes a
 	// `{ path, params, query }` object and turns it into
 	// the data we need to render the page
@@ -18,11 +19,13 @@
 		console.log(recipe.IngredientList.length)
 		return { recipe };
 	}
+
 </script>
 
 <script>
 	// export let id;
 	export let recipe;
+	let tags = recipe.tags.length ? recipe.tags : null;
 </script>
 
 <svelte:head>
@@ -31,6 +34,11 @@
 
 <h1><a class="upward-nav" href="/"><img src="/chevron-left.svg" alt="Back"></a>{recipe.Name}</h1>
 
+{#if tags}
+	{#each tags as tag}
+		<Tag tag={tag} />
+	{/each}
+{/if}
 
 <div class="recipe__section">
 {#if recipe.IngredientList.length}
@@ -50,7 +58,7 @@
 </Ingredient>
 {/each}
 {/if}
-
+<!-- 
 {#if recipe.IngredientsList2.length}
 	{#if recipe.IngredientSection2Heading}
 		<h2>{recipe.IngredientSection2Heading}</h2>
@@ -79,7 +87,7 @@
 	>
 </Ingredient>
 {/each}
-{/if}
+{/if} -->
 
 </div>
 <div class="recipe__section">
@@ -98,6 +106,13 @@
 	}
 	.upward-nav {
 		margin-right: 4px;
+		display: block;
+		border-radius: 50%;
+		width: 40px;
+		height: 40px;
+		text-align: center;
+		line-height: 40px;
+		background-color: #E0E0E0;
 	}
 	.recipe__section {
 		margin: 24px auto;

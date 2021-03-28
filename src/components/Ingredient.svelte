@@ -7,8 +7,8 @@
 
 <div class="ingredient">
 	<div class="ingredient__bullet"></div>
-	<div class="ingredient__quantity">{quantity}</div>
-	<div class="ingredient__unit">{unit}</div>
+	<div class="ingredient__quantity">{quantity}&nbsp;</div>
+	<div class="ingredient__unit">{unit}&nbsp;</div>
 	<div class="ingredient__name">{ingredient}</div>
 	{#if preparation}
 		<div class="ingredient__preparation">, {preparation}</div>
@@ -35,7 +35,7 @@
 		font-size: var(--text-size-md);
 	}
 	.ingredient__unit {
-		margin-right: 8px;
+		/*margin-right: 8px;*/
 	}
 </style>
 

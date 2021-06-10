@@ -1,5 +1,5 @@
 <svelte:head>
-	<title>recipes</title>
+	<title>Recipes</title>
 </svelte:head>
 
 <script>

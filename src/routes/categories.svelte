@@ -1,14 +1,12 @@
 <svelte:head>
 	<title>Recipes</title>
 </svelte:head>
-
 <script>
 	import API_URL from '../api.js';
 
 	import { onMount } from 'svelte';
-	import RecipeListItem from '../components/RecipeListItem.svelte';
 
-	let recipes = [];
+	let categories = [];
 	let error = null
 
 
@@ -27,33 +25,21 @@
 	  };
 
 		try {
-			const res = await fetch(`${API_URL}/recipes`, {
+			const res = await fetch(`${API_URL}/categories`, {
 			  method: "GET",
 			  headers: {
 			     'Content-Type': 'application/json'
 			  },
 			}).then(checkStatus)
 	      .then(parseJSON);
-			recipes = res
+			categories = res
+			console.log(categories)
+
 		} catch (e) {
 			error = e
 		}
 	});
-	console.log(recipes)
 </script>
-<div class="content">
-	<h1>Recipes</h1>
-	<ul>
-		{#each recipes as recipe}
-			<RecipeListItem recipe={recipe}/>
-		{/each}
-	</ul>
-	
-</div>
 
-<style>
-	ul {
-		padding-left: 0;
-		list-style: none;
-	}
-</style>
+
+<h1>Categories</h1>

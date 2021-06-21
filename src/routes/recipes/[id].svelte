@@ -1,6 +1,7 @@
 <script context="module">
 	import API_URL from '../../api.js';
 	import Ingredient from '../../components/Ingredient.svelte';
+	import IngredientsSectionHeading from '../../components/IngredientsSectionHeading.svelte';
 	import Tag from '../../components/Tag.svelte';
 	// the (optional) preload function takes a
 	// `{ path, params, query }` object and turns it into
@@ -17,8 +18,10 @@
 		const res = await this.fetch(`${API_URL}/recipes/${id}`);
 		const recipe = await res.json();
 		console.log(recipe.IngredientList.length)
+		console.log(recipe);
 		return { recipe };
 	}
+
 
 </script>
 
@@ -40,23 +43,31 @@
 	{/each}
 {/if}
 
+{#if recipe.image}
+	<img src="{recipe.image.url}" alternativeText="image">
+	<img src="{recipe.image.formats.thumbnail.url}" alternativeText="image">
+{/if}
 <div class="recipe__section">
 {#if recipe.IngredientList.length}
-	{#if recipe.IngredientSection1Heading}
-		<h2>{recipe.IngredientSection1Heading}</h2>
-	{:else}
+ 	{#if recipe.IngredientList[0].HeadingOnly !== true}
 		<h2>Ingredients</h2>
 	{/if}
-
-{#each recipe.IngredientList as ingredient}
-<Ingredient
-	quantity={ingredient.Quantity}
-	unit={ingredient.Unit}
-	ingredient={ingredient.ingredient.Name}
-	preparation={ingredient.Preparation}
-	>
-</Ingredient>
-{/each}
+	{#each recipe.IngredientList as ingredient}
+		{#if ingredient.HeadingOnly === true}
+			<IngredientsSectionHeading
+				heading="{ingredient.Heading}"
+			>
+			</IngredientsSectionHeading>
+		{:else}
+			<Ingredient
+				quantity={ingredient.Quantity}
+				unit={ingredient.Unit}
+				ingredient={ingredient.ingredient.Name}
+				preparation={ingredient.Preparation}
+				>
+			</Ingredient>
+		{/if}
+	{/each}
 {/if}
 <!-- 
 {#if recipe.IngredientsList2.length}

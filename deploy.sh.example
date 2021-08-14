@@ -1,0 +1,4 @@
+echo "Syncing to S3"
+aws s3 sync LOCALPATH S3BUCKETPATH
+echo "Invalidating cache"
+aws cloudfront create-invalidation --distribution-id DISTRIBUTIONID --paths "/*"

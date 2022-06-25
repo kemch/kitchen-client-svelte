@@ -26,9 +26,26 @@
 </script>
 
 <script>
-	// export let id;
 	export let recipe;
 	let tags = recipe.tags.length ? recipe.tags : null;
+	let incrementing = false;
+	let factor = 1;
+	let increment = 1;
+	function revealIncrementer() {
+		incrementing = !incrementing;
+	}
+	function incrementUp() {
+		factor = factor + increment;
+	}
+	function incrementDown() {
+		if (factor > increment) {
+			factor = factor - increment;
+		} else {
+			factor = increment;
+		}
+	}
+
+
 </script>
 
 <svelte:head>
@@ -42,6 +59,29 @@
 		<Tag tag={tag} />
 	{/each}
 {/if}
+
+<div class="recipe__serving-size">
+	<div class="flex--left">
+		<div class="recipe__serving-size__label">Serving size</div>
+		<button class="recipe__serving-size__stepper" on:click={incrementDown}> - </button>
+		<input class="recipe__serving-size__input" type="text" bind:value={factor}>
+		<button class="recipe__serving-size__stepper" on:click={incrementUp}> + </button>
+	</div>
+	<div class="flex--right">
+		{#if incrementing}
+			<div class="recipe__serving-size__label">Increment</div>
+			<select class="recipe__serving-size__factor" bind:value={increment}>
+				<option value={1}>by 1</option>
+				<option value={0.5}>by 1/2</option>
+				<option value={0.333}>by 1/3</option>
+				<option value={0.25}}>by 1/4</option>
+				<option value={0.125}>by 1/8</option>
+			</select>
+		{:else}
+			<button on:click={revealIncrementer} class="overflow">by {increment}</button>
+		{/if}
+	</div>
+</div>
 
 {#if recipe.image}
 	<img src="{recipe.image.url}" alternativeText="image">
@@ -60,6 +100,7 @@
 			</IngredientsSectionHeading>
 		{:else}
 			<Ingredient
+				bind:factor = {factor}
 				quantity={ingredient.Quantity}
 				unit={ingredient.Unit}
 				ingredient={ingredient.ingredient.Name}
@@ -127,5 +168,54 @@
 	}
 	.recipe__section {
 		margin: 24px auto;
+	}
+	.recipe__serving-size__label {
+		line-height: 1.9;
+		margin-right: 5px;
+	}
+	.recipe__serving-size {
+		display:  flex;
+		vertical-align: middle;
+	}
+	.recipe__serving-size__input {
+		max-width: 25px;
+		border:  0;
+		/*padding-left: 10px;*/
+		text-align:  center;
+	}
+
+	.recipe__serving-size__stepper {
+		background: #E0E0E0;
+		border:  0;
+		width: 32px;
+		height: 32px;
+		border-radius:  50%;
+		text-align:  center;
+		/*line-height: 32px;*/
+		font-size: 16px;
+		padding:  0;
+		margin:  0;
+	}
+	.overflow {
+		background:  transparent;
+		border:  0;
+		color: #3870FF;
+		font-weight: 600;
+		width:  auto;
+		font-size: 12px;
+		padding-left: 10px;
+		padding-right: 10px;
+		border-radius: 5px;
+	}
+	.recipe__serving-size__stepper:active {
+		background-color: #b8b8b8;
+	}
+	.flex--left,
+	.flex--right {
+		display:  flex;
+	}
+	.flex--right {
+		margin-left:  auto;
+		text-align:  right;
 	}
 </style>

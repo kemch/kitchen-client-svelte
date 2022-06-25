@@ -1,4 +1,5 @@
 <script>
+	export let factor;
 	export let quantity;
 	export let unit;
 	export let ingredient;
@@ -23,12 +24,18 @@
 		}
 	}
 
+
+	function adjustServingSize(quantity, factor) {
+		console.log(quantity)
+		return quantity * factor;
+	}
+
 	let quantityFormatted = formatFraction(quantity);
 </script>
 
 <div class="ingredient">
 	<div class="ingredient__bullet"></div>
-	<div class="ingredient__quantity" data-quantity={quantity}>{quantityFormatted}&nbsp;</div>
+	<div class="ingredient__quantity" data-quantity={quantity}>{adjustServingSize(quantity, factor)}&nbsp;</div>
 	<div class="ingredient__unit">{unit}&nbsp;</div>
 	<div class="ingredient__name">{ingredient}</div>
 	{#if preparation}

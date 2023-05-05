@@ -7,6 +7,7 @@
 
 	import { onMount } from 'svelte';
 	import RecipeListItem from '../components/RecipeListItem.svelte';
+	import Skeletal from '../components/Skeletal.svelte';
 
 	let recipes = [];
 	let error = null
@@ -43,7 +44,14 @@
 </script>
 <div class="content">
 	<h1>Recipes</h1>
-	<ul>
+	<ul>{#if recipes.length === 0}
+			<Skeletal />
+			<Skeletal />
+			<Skeletal />
+			<Skeletal />
+			<Skeletal />
+			<Skeletal />
+		{/if}
 		{#each recipes as recipe}
 			<RecipeListItem recipe={recipe}/>
 		{/each}

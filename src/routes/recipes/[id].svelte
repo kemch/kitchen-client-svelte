@@ -15,9 +15,12 @@
 		// `this.fetch` is a wrapper around `fetch` that allows
 		// you to make credentialled requests on both
 		// server and client
-		const res = await this.fetch(`${API_URL}/recipes/${id}`);
+		// /api/recipes/1?populate[0]=IngredientList&populate[1]=IngredientList.ingredient
+		const res = await this.fetch(`${API_URL}/recipes/${id}?populate[0]=IngredientList&populate[1]=IngredientList.ingredient`);
 		const recipe = await res.json();
-		console.log(recipe.IngredientList.length)
+		// console.log(recipe.IngredientList)
+		console.log(`${API_URL}/recipes/${id}?populate=*`)
+		console.log('recipe');
 		console.log(recipe);
 		return { recipe };
 	}
@@ -27,7 +30,8 @@
 
 <script>
 	export let recipe;
-	let tags = recipe.tags.length ? recipe.tags : null;
+	// let tags = recipe.tags.length ? recipe.tags : null;
+	let tags = false;
 	let incrementing = false;
 	let factor = 1;
 	let increment = 1;
@@ -49,10 +53,10 @@
 </script>
 
 <svelte:head>
-	<title>{recipe.Name}</title>
+	<title>{recipe.data.attributes.Name}</title>
 </svelte:head>
 
-<h1><a class="upward-nav" href="/"><img src="/chevron-left.svg" alt="Back"></a>{recipe.Name}</h1>
+<h1><a class="upward-nav" href="/"><img src="/chevron-left.svg" alt="Back"></a>{recipe.data.attributes.Name}</h1>
 
 {#if tags}
 	{#each tags as tag}
@@ -83,16 +87,12 @@
 	</div>
 </div>
 
-{#if recipe.image}
-	<img src="{recipe.image.url}" alternativeText="image">
-	<img src="{recipe.image.formats.thumbnail.url}" alternativeText="image">
-{/if}
 <div class="recipe__section">
-{#if recipe.IngredientList.length}
- 	{#if recipe.IngredientList[0].HeadingOnly !== true}
+{#if recipe.data.attributes.IngredientList.length}
+ 	{#if recipe.data.attributes.IngredientList[0].HeadingOnly !== true}
 		<h2>Ingredients</h2>
 	{/if}
-	{#each recipe.IngredientList as ingredient}
+	{#each recipe.data.attributes.IngredientList as ingredient}
 		{#if ingredient.HeadingOnly === true}
 			<IngredientsSectionHeading
 				heading="{ingredient.Heading}"
@@ -103,7 +103,7 @@
 				bind:factor = {factor}
 				quantity={ingredient.Quantity}
 				unit={ingredient.Unit}
-				ingredient={ingredient.ingredient.Name}
+				ingredient={ingredient.ingredient.data.attributes.Name}
 				preparation={ingredient.Preparation}
 				>
 			</Ingredient>
@@ -145,7 +145,7 @@
 <div class="recipe__section">
 <h2>Instructions</h2>
 <div class='content' style="white-space:pre-wrap;">
-{@html recipe.Recipe}
+{@html recipe.data.attributes.Recipe}
 </div>
 </div>
 

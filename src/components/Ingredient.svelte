@@ -38,7 +38,7 @@
 	<div class="ingredient__quantity" data-quantity={quantity}>{adjustServingSize(quantity, factor)}&nbsp;</div>
 	<div class="ingredient__unit">{unit}&nbsp;</div>
 	<div class="ingredient__name">{ingredient}</div>
-	{#if preparation}
+	{#if !!preparation}
 		<div class="ingredient__preparation">, {preparation}</div>
 	{/if}
 </div>

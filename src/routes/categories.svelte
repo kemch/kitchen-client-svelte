@@ -43,3 +43,12 @@
 
 
 <h1>Categories</h1>
+
+<!-- svelte-ignore empty-block -->
+{#if categories.data}
+	{#each categories.data as category}
+		<div>{category.id}</div>
+		<div>{category.attributes.CategoryName}</div>
+		
+	{/each}
+{/if}

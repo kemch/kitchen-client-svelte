@@ -40,22 +40,25 @@
 			error = e
 		}
 	});
+	console.log('recipes')
 	console.log(recipes)
 </script>
 <div class="content">
 	<h1>Recipes</h1>
-	<ul>{#if recipes.length === 0}
-			<Skeletal />
-			<Skeletal />
-			<Skeletal />
-			<Skeletal />
-			<Skeletal />
-			<Skeletal />
+	{#if typeof recipes == 'undefined' }
+		<Skeletal />
+		<Skeletal />
+		<Skeletal />
+		<Skeletal />
+		<Skeletal />
+		<Skeletal />
+	{:else}
+		{#if recipes.data}
+			{#each recipes.data as recipe}
+				<RecipeListItem recipe={recipe} />
+			{/each}
 		{/if}
-		{#each recipes as recipe}
-			<RecipeListItem recipe={recipe}/>
-		{/each}
-	</ul>
+	{/if}
 	
 </div>
 

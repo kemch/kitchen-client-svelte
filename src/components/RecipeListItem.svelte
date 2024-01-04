@@ -2,12 +2,13 @@
 	import Tag from './Tag.svelte';
 	export let recipe;
 
-	let tags = recipe.tags.length ? recipe.tags : null;
+	// let tags = recipe.tags.length ? recipe.tags : null;
+	let tags = false;
 
 </script>
 
 <li>
-	<a href="/recipes/{recipe.id}"><img src="/book.svg" alt=""> {recipe.Name}</a>
+	<a href="/recipes/{recipe.id}"><img src="/book.svg" alt=""> {recipe.attributes.Name}</a>
 
 	{#if tags}
 	<div class="tags">

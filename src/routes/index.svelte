@@ -28,7 +28,7 @@
 	  };
 
 		try {
-			const res = await fetch(`${API_URL}/recipes`, {
+			const res = await fetch(`${API_URL}/recipes?pagination[limit]=100`, {
 			  method: "GET",
 			  headers: {
 			     'Content-Type': 'application/json'
